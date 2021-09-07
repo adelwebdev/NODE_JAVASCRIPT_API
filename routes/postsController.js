@@ -1,59 +1,22 @@
+// dans dossier routes créer fichier postsController.js ; ensuite récupérer framework express (comme suite)
+// appel du framework express et utilisation de la const router pr joindre l'objet router de express
 const express = require("express");
 const router = express.Router();
-const ObjectID = require("mongoose").Types.ObjectId;
 
+// chercher notre modèle de posts (de messages)
 const { PostsModel } = require("../models/postsModel");
 
-router.get("/", (req, res) => {
+// pr afficher contenu de notre DB!!
+// get pour ce qui est écrit dans l'url, le callBakc: tu fais req, res (request & response)
+router.get("localhost:5050/posts/", (req, res) => {
+  //PostsModel.find ; veut dire tu vas nous chercher! ici err et docs (1er paramètre c l'erreur, le second si y'a pas d'erreur tu vas chercher docs)
   PostsModel.find((err, docs) => {
     // console.log(docs);
+    // si y a pas d'erreurs tu fais res.send de docs (tu envoies docs sur le navigateur) sinon tu fais un msg d'erreur data
     if (!err) res.send(docs);
-    else console.log("Error to get data: " + err);
+    else console.log("error de get data: " + err);
   });
 });
-
-router.post("/", (req, res) => {
-  console.log(req.body);
-  const newRecord = new PostsModel({
-    author: req.body.author,
-    message: req.body.message,
-  });
-
-  newRecord.save((err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("Error creating new data" + err);
-  });
-});
-
-//-----------Update-------
-router.put("/:id", (req, res) => {
-  if (!ObjectID.isValid(req.params.id))
-    return res.status(400).send("ID unknow : " + req.params.id);
-
-  const updateRecord = {
-    author: req.body.author,
-    message: req.body.message,
-  };
-
-  PostsModel.findByIdAndUpdate(
-    req.params.id,
-    { $set: updateRecord },
-    { new: true },
-    (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Update error" + err);
-    }
-  );
-});
-
-router.delete("/:id", (req, res) => {
-  if (!ObjectID.isValid(req.params.id))
-    return res.status(400).send("ID unknow : " + req.params.id);
-
-  PostsModel.findByIdAndRemove(req.params.id, (err, docs) => {
-    if (!err) res.send(docs);
-    else console.log("Delete error : " + err);
-  });
-});
-
 module.exports = router;
+
+// faire du CRUD avec notre "router"
