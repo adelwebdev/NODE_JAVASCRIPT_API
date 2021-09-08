@@ -4,8 +4,10 @@
 // nodemon est un packet qui permet de mettre à jour le server à chaque enregistrement
 // dans package.json; on change "test": "echo \"Error: no test specified\" && exit 1" par "npm start": "nodemon index.js" pour la config de npm start
 // on fait: npm start ; pr faire tourner nodemon sur index.js
+// installation de bodyParser: npm i -s body-parser
 
 // on appelle express; comme suite
+const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 
@@ -14,6 +16,16 @@ require("./models/dbConfig");
 
 // on veut que notre Router soit accessible dans l'index.js
 const postsRoutes = require("./routes/postsController.js");
+
+// ici appelle de bodyParser; on en a besoin pour faire req.body dans postsController
+app.use(bodyParser.json());
+
+// on fait un middleware pour éviter les dépressiation avec findByIdAndUpdate et findByIdAndDelete
+// parce que dans la console, ils nous ont demandé de mettre useFindAndModify sur false (voir ci-bàs comment faire)
+// d'abord on s'appelle mongoose
+const mongoose = require("mongoose");
+
+mongoose.set("useFindAndModify", false);
 
 // on se crée un MIDDLEWARE (une fct qui va ecouter chaque changement sur req (request) et res (response))
 // surveille si l'appli est sur "/" alors envoie postsRoutes sachant que: const postsRoutes = require("./routes/postsController.js");
