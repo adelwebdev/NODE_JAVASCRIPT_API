@@ -10,7 +10,7 @@ const { PostsModel } = require("../models/postsModel");
 
 // faire du CRUD avec notre "router"
 
-// pr afficher contenu de notre DB!!
+// avec get pr afficher contenu de notre DB!!
 // get pour ce qui est écrit dans l'url, ici (req, res) sont le "callBack": tu fais req, res (request & response)
 
 router.get("localhost:5050/posts/", (req, res) => {
@@ -28,7 +28,6 @@ router.post("/", (req, res) => {
   console.log(req.body);
   // ici newRecord c PostsModel qui est un objet:
   // cela ne marche pas si on n'a pas préalablement téléchargé bodyParser! req.body ne fonctionne qu'avec bodypParser
-
   const newRecord = new PostsModel({
     author: req.body.author,
     message: req.body.message,
@@ -63,7 +62,7 @@ router.put("/:id", (req, res) => {
 });
 
 // maintenant la partie delete!! fin du crud!
-// avec router.delete pr faire des update (méthode put)!! editer les données, update
+// avec router.delete pr supprimer (méthode delete)!!
 router.delete("/:id", (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknow : " + req.params.id);
