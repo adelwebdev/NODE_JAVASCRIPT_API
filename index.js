@@ -7,7 +7,6 @@
 // installation de bodyParser: npm i -s body-parser
 
 // on appelle express; comme suite
-const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 
@@ -17,18 +16,27 @@ require("./models/dbConfig");
 // on veut que notre Router soit accessible dans l'index.js
 const postsRoutes = require("./routes/postsController.js");
 
-// ici appelle de bodyParser; on en a besoin pour faire req.body dans postsController
-app.use(bodyParser.json());
+// on appelle bodyParser dans cet ordre!! faut respecter l'ordre ici!!! (refaire même fichier!)
+const bodyParser = require("body-parser");
 
 // on fait un middleware pour éviter les dépressiation avec findByIdAndUpdate et findByIdAndDelete
 // parce que dans la console, ils nous ont demandé de mettre useFindAndModify sur false (voir ci-bàs comment faire)
 // d'abord on s'appelle mongoose
 const mongoose = require("mongoose");
+// appeller cors ici (pr: notre API disponible depuis tt internet) faut respecter l'ordre du codage
+// on s'appelle cors au debut / const cors = require("cors")
+// faut mettre le middleware de cors avant app.use("/posts", postsRoutes);
+// cors permet à notre api d'être accesible sur internet de n'importe où!
+// npm i -s cors pr installer cors
+const cors = require("cors");
 
 mongoose.set("useFindAndModify", false);
 
-// on s'appelle cors au debut / const cors = require("cors")
-// faut mettre le middleware de cors avant app.use("/posts", postsRoutes);
+// ici appelle de bodyParser; on en a besoin pour faire req.body dans postsController
+app.use(bodyParser.json());
+
+// on mettant cors (); comme ça; ça veut dire on ouvre les portes à tt le monde (internet)
+app.use(cors());
 
 // on se crée un MIDDLEWARE (une fct qui va ecouter chaque changement sur req (request) et res (response))
 // surveille si l'appli est sur "/" alors envoie postsRoutes sachant que: const postsRoutes = require("./routes/postsController.js");
@@ -46,6 +54,3 @@ app.listen(5500, () => {
 // on fait (dans compass) Create Database (possible d'insérer des data en brute "comme dans file mongo.db")
 // mainteant créer une connection à cette DB; la configurer! (voir models)
 // d'abord faut installer mongoose: npm i -s mongoose
-
-// cors permet à notre api d'être accesible sur internet de n'importe où!
-// npm i -s cors
