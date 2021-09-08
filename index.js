@@ -19,10 +19,12 @@ const postsRoutes = require("./routes/postsController.js");
 // on appelle bodyParser dans cet ordre!! faut respecter l'ordre ici!!! (refaire même fichier!)
 const bodyParser = require("body-parser");
 
-// on fait un middleware pour éviter les dépressiation avec findByIdAndUpdate et findByIdAndDelete
-// parce que dans la console, ils nous ont demandé de mettre useFindAndModify sur false (voir ci-bàs comment faire)
 // d'abord on s'appelle mongoose
 const mongoose = require("mongoose");
+
+// on fait un middleware pour éviter les dépressiation avec findByIdAndUpdate et findByIdAndDelete
+// parce que dans la console, ils nous ont demandé de mettre useFindAndModify sur false (voir ci-bàs comment faire)
+
 // appeller cors ici (pr: notre API disponible depuis tt internet) faut respecter l'ordre du codage
 // on s'appelle cors au debut / const cors = require("cors")
 // faut mettre le middleware de cors avant app.use("/posts", postsRoutes);
