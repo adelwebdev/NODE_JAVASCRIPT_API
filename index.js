@@ -27,6 +27,9 @@ const mongoose = require("mongoose");
 
 mongoose.set("useFindAndModify", false);
 
+// on s'appelle cors au debut / const cors = require("cors")
+// faut mettre le middleware de cors avant app.use("/posts", postsRoutes);
+
 // on se crée un MIDDLEWARE (une fct qui va ecouter chaque changement sur req (request) et res (response))
 // surveille si l'appli est sur "/" alors envoie postsRoutes sachant que: const postsRoutes = require("./routes/postsController.js");
 // comme ceci les posts s'affichent dans localhost:5050/posts ; faut ajouter aussi le chemin entres " " dans : postsController; router.get(" ", (req,res))
@@ -43,3 +46,6 @@ app.listen(5500, () => {
 // on fait (dans compass) Create Database (possible d'insérer des data en brute "comme dans file mongo.db")
 // mainteant créer une connection à cette DB; la configurer! (voir models)
 // d'abord faut installer mongoose: npm i -s mongoose
+
+// cors permet à notre api d'être accesible sur internet de n'importe où!
+// npm i -s cors
