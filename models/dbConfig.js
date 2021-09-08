@@ -12,3 +12,4 @@ mongoose.connect(
     else console.log("Connection error :" + err);
   }
 );
+// c la doc; faut écrire le même code!
