@@ -36,6 +36,7 @@ mongoose.set("useFindAndModify", false);
 app.use(bodyParser.json());
 
 // on mettant cors (); comme ça; ça veut dire on ouvre les portes à tt le monde (internet)
+// si on veut que (ex: codepen qui a accés à notre api) alors: app.use(cors({origin: "https://cdpn.io"}));
 app.use(cors());
 
 // on se crée un MIDDLEWARE (une fct qui va ecouter chaque changement sur req (request) et res (response))
